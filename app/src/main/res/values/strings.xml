@@ -2,4 +2,12 @@
     <string name="app_name">ChristmasApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+
+    <string name="scale_b">ド</string>
+    <string name="scale_c">レ</string>
+    <string name="scale_d">ミ</string>
+    <string name="scale_e">ファ</string>
+    <string name="scale_f">ソ</string>
+    <string name="scale_g">ラ</string>
+    <string name="scale_a">シ</string>
 </resources>
