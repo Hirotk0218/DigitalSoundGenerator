@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,6 +15,20 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.15" />
 
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_play"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/scale_b"
             android:layout_width="0dp"
@@ -25,7 +40,7 @@
             android:textSize="28sp"
             app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
         <TextView
             android:id="@+id/scale_c"
@@ -105,98 +120,157 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scale_g" />
 
-        <androidx.core.widget.NestedScrollView
+        <HorizontalScrollView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline">
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="@+id/scale_b">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleBList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:overScrollMode="never" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scaleBList"
-                        android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleCList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleBList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scaleCList"
-                        android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="8dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/scaleBList" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleDList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleCList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scaleDList"
-                        android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="8dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/scaleCList" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleEList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleDList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scaleEList"
-                        android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="8dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/scaleDList" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleFList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleEList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scaleFList"
-                        android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="8dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/scaleEList" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleGList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleFList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scaleGList"
-                        android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="8dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/scaleFList" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleAList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleGList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scaleAList"
-                        android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="8dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/scaleGList" />
+            </RelativeLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
+        </HorizontalScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
+
+
+    <!--
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleBList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:overScrollMode="never"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/item_scale" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleCList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/scaleBList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleDList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/scaleCList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleEList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleDList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleFList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleEList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleGList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleFList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleAList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleGList" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+    -->

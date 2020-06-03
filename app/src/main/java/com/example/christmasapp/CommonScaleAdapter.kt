@@ -15,20 +15,15 @@ class CommonScaleAdapter(
     private val dataList: List<SoundDto>
 ) : RecyclerView.Adapter<CommonScaleAdapter.ViewHolder>() {
 
-    // region MARK: -private field
-    var onItemClick: (item: SoundDto) -> Unit = {}
+    // region MARK: -public field
+    var onItemClick: (position: Int) -> Unit = {}
     // endregion
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: ItemScaleBinding =
             DataBindingUtil.inflate(inflater, R.layout.item_scale, parent, false)
-        val vh = ViewHolder(binding)
-        binding.root.setOnClickListener {
-            val data = dataList[vh.adapterPosition]
-            onItemClick(data)
-        }
-        return vh
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = dataList.size
@@ -36,10 +31,23 @@ class CommonScaleAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
 
-        if (data.isSelected) {
+        val binding = holder.binding
+        binding.itemView.setOnClickListener {
+            onItemClick(position)
 
+            if (data.isSelected) {
+                binding.itemView.setBackgroundColor(binding.itemView.context.getColor(R.color.colorAccent))
+            } else {
+                binding.itemView.setBackgroundColor(binding.itemView.context.getColor(R.color.colorPrimaryDark))
+            }
+        }
+
+        if (data.isSelected) {
+            binding.itemView.setBackgroundColor(binding.itemView.context.getColor(R.color.colorAccent))
+        } else {
+            binding.itemView.setBackgroundColor(binding.itemView.context.getColor(R.color.colorPrimaryDark))
         }
     }
 
-    class ViewHolder(binding: ItemScaleBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemScaleBinding) : RecyclerView.ViewHolder(binding.root)
 }

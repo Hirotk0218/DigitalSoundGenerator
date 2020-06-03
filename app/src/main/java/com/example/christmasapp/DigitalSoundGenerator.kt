@@ -19,9 +19,6 @@ class DigitalSoundGenerator(
 
     companion object {
         // とりあえず１オクターブ分の音階を確保（半音階含む）
-        const val FREQ_A = 220.0
-        const val FREQ_As = 233.081880
-        const val FREQ_B = 246.941650
         const val FREQ_C = 261.625565
         const val FREQ_Cs = 277.182630
         const val FREQ_D = 293.664767
@@ -31,9 +28,9 @@ class DigitalSoundGenerator(
         const val FREQ_Fs = 369.994227
         const val FREQ_G = 391.994535
         const val FREQ_Gs = 415.304697
-//        const val FREQ_A  = 440.0
-//        const val FREQ_As = 466.163761
-//        const val FREQ_B  = 493.883301
+        const val FREQ_A = 440.0
+        const val FREQ_As = 466.163761
+        const val FREQ_B = 493.883301
     }
 
     var audioTrack = AudioTrack.Builder()

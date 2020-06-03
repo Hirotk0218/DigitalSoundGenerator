@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.christmasapp.databinding.FragmentCreateMusicalScoreBinding
 
 /**
@@ -15,7 +16,6 @@ import com.example.christmasapp.databinding.FragmentCreateMusicalScoreBinding
 class CreateMusicalScoreFragment : Fragment(), Runnable {
 
     companion object {
-        // 音符の長さ
         const val HALF_NOTE = 0.5
     }
 
@@ -25,8 +25,10 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
     private var audioTrack: AudioTrack? = null
     private var soundList = ArrayList<Pair<Int, ArrayList<SoundDto>>>()
     private var scaleCount = 0
-    private var selectScalePosition = 0
+    private var scalePosition = 0
     private var isPlay = false
+    private val scaleList = mutableListOf<SoundDto>()
+    private val mixSoundList = mutableListOf<SoundDto>()
     // endregion
 
     // region MARK: - fragment lifeCycle methods
@@ -43,9 +45,43 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.playButton.setOnClickListener {
+
+            mixSoundList.clear()
+
+            var position = 0
+            do {
+                soundList[position].second.forEach {
+                    if (!it.isSelected) {
+                        it.sound = generateEmptySound(soundGenerator!!, HALF_NOTE)
+                    } else {
+                        it.sound = scaleList[position].sound
+                    }
+                }
+
+                if (position == 0) {
+                    mixSoundList.addAll(soundList[0].second)
+                } else {
+                    mixSoundList.forEach {
+                        for (n in it.sound.indices)
+                            it.sound[n] =
+                                (it.sound[n] + scaleList[position].sound[n]).toByte()
+                    }
+                }
+
+                position++
+            } while (position < 6)
+
+            isPlay = true
+
+            val th = Thread(this@CreateMusicalScoreFragment)
+            th.start()
+        }
+
         soundGenerator = DigitalSoundGenerator(44100, 44100)
         audioTrack = soundGenerator!!.audioTrack
         setupRecyclerView()
+        setupScaleList()
     }
 
     override fun onDestroy() {
@@ -69,11 +105,11 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
 
         // スコアデータを書き込む
         if (isPlay) {
-            for (sound in soundList[selectScalePosition].second) {
+            for (sound in mixSoundList) {
                 audioTrack!!.write(sound.sound, 0, sound.sound.size)
             }
         } else {
-            val sound = soundList[selectScalePosition].second.first()
+            val sound = scaleList[scalePosition]
             audioTrack!!.write(sound.sound, 0, sound.sound.size)
         }
         // 再生停止
@@ -81,114 +117,166 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
     }
     // endregion
 
-    // region MARK: -private method
+    // region MARK: -private methods
     /**
-     * 各音階ごとのリストの設定
+     * ８ビットのピコピコ音を生成する.
+     * @param gen Generator
+     * @param freq 周波数(音階)
+     * @param length 音の長さ
+     * @return 音データ
+     */
+    private fun generateSound(
+        gen: DigitalSoundGenerator,
+        freq: Double,
+        length: Double
+    ): ByteArray {
+        return gen.getSound(freq, length)
+    }
+
+    /**
+     * 無音データを作成する
+     * @param gen Generator
+     * @param length 無音データの長さ
+     * @return 無音データ
+     */
+    private fun generateEmptySound(gen: DigitalSoundGenerator, length: Double): ByteArray {
+        return gen.getEmptySound(length)
+    }
+
+    /**
+     * リスト要素用の音階リストの作成
+     */
+    private fun setupScaleList() {
+        scaleList.clear()
+        scaleList.addAll(
+            listOf(
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_C,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_D,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_E,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_F,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_G,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_A,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_B,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                )
+            )
+        )
+    }
+
+    /**
+     * 各音階ごとのAdapterの設定
      */
     private fun setupRecyclerView() {
         // ド
-        val scaleBAdapter =
-            CommonScaleAdapter(dataList = createDummyList(DigitalSoundGenerator.FREQ_B)).apply {
-                onItemClick = {
-                    selectScalePosition = 0
-                    val th = Thread(this@CreateMusicalScoreFragment)
-                    th.start()
-                }
-            }
-
-        binding.scaleBList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = scaleBAdapter
-        }
-
+        setupAdapter(
+            recyclerView = binding.scaleBList,
+            scale = DigitalSoundGenerator.FREQ_C,
+            position = 0
+        )
         // レ
-        val scaleCAdapter =
-            CommonScaleAdapter(dataList = createDummyList(DigitalSoundGenerator.FREQ_C)).apply {
-                onItemClick = {
-                    selectScalePosition = 1
-                    val th = Thread(this@CreateMusicalScoreFragment)
-                    th.start()
-                }
-            }
-
-        binding.scaleCList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = scaleCAdapter
-        }
-
+        setupAdapter(
+            recyclerView = binding.scaleCList,
+            scale = DigitalSoundGenerator.FREQ_D,
+            position = 1
+        )
         // ミ
-        val scaleDAdapter =
-            CommonScaleAdapter(dataList = createDummyList(DigitalSoundGenerator.FREQ_D)).apply {
-                onItemClick = {
-                    selectScalePosition = 2
-                    val th = Thread(this@CreateMusicalScoreFragment)
-                    th.start()
-                }
-            }
-
-        binding.scaleDList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = scaleDAdapter
-        }
-
+        setupAdapter(
+            recyclerView = binding.scaleDList,
+            scale = DigitalSoundGenerator.FREQ_E,
+            position = 2
+        )
         // ファ
-        val scaleEAdapter =
-            CommonScaleAdapter(dataList = createDummyList(DigitalSoundGenerator.FREQ_E)).apply {
-                onItemClick = {
-                    selectScalePosition = 3
-                    val th = Thread(this@CreateMusicalScoreFragment)
-                    th.start()
-                }
-            }
-
-        binding.scaleEList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = scaleEAdapter
-        }
-
+        setupAdapter(
+            recyclerView = binding.scaleEList,
+            scale = DigitalSoundGenerator.FREQ_F,
+            position = 3
+        )
         // ソ
-        val scaleFAdapter =
-            CommonScaleAdapter(dataList = createDummyList(DigitalSoundGenerator.FREQ_F)).apply {
-                onItemClick = {
-                    selectScalePosition = 4
-                    val th = Thread(this@CreateMusicalScoreFragment)
-                    th.start()
-                }
-            }
-
-        binding.scaleFList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = scaleFAdapter
-        }
-
+        setupAdapter(
+            recyclerView = binding.scaleFList,
+            scale = DigitalSoundGenerator.FREQ_G,
+            position = 4
+        )
         // ラ
-        val scaleGAdapter =
-            CommonScaleAdapter(dataList = createDummyList(DigitalSoundGenerator.FREQ_G)).apply {
-                onItemClick = {
-                    selectScalePosition = 5
-                    val th = Thread(this@CreateMusicalScoreFragment)
-                    th.start()
-                }
-            }
-
-        binding.scaleGList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = scaleGAdapter
-        }
-
+        setupAdapter(
+            recyclerView = binding.scaleGList,
+            scale = DigitalSoundGenerator.FREQ_A,
+            position = 5
+        )
         // シ
-        val scaleAAdapter =
-            CommonScaleAdapter(dataList = createDummyList(DigitalSoundGenerator.FREQ_A)).apply {
+        setupAdapter(
+            recyclerView = binding.scaleAList,
+            scale = DigitalSoundGenerator.FREQ_B,
+            position = 6
+        )
+    }
+
+    /**
+     * 共用Adapterの設定
+     *
+     * @param recyclerView RecyclerView
+     * @param scale 音階
+     * @param position 音階の位置情報
+     */
+    private fun setupAdapter(recyclerView: RecyclerView, scale: Double, position: Int) {
+        val scaleAdapter =
+            CommonScaleAdapter(dataList = createDummyList(scale)).apply {
                 onItemClick = {
-                    selectScalePosition = 6
-                    val th = Thread(this@CreateMusicalScoreFragment)
-                    th.start()
+                    isPlay = false
+                    scalePosition = position
+                    soundList[scalePosition].second[it].isSelected =
+                        !soundList[scalePosition].second[it].isSelected
+
+                    if (soundList[scalePosition].second[it].isSelected) {
+                        val th = Thread(this@CreateMusicalScoreFragment)
+                        th.start()
+                    }
                 }
             }
 
-        binding.scaleAList.apply {
+        recyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = scaleAAdapter
+            adapter = scaleAdapter
         }
     }
 
@@ -214,20 +302,5 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
         soundList.add(Pair(first = scaleCount, second = items))
         scaleCount++
         return items
-    }
-
-    /**
-     * ８ビットのピコピコ音を生成する.
-     * @param gen Generator
-     * @param freq 周波数(音階)
-     * @param length 音の長さ
-     * @return 音データ
-     */
-    private fun generateSound(
-        gen: DigitalSoundGenerator,
-        freq: Double,
-        length: Double
-    ): ByteArray {
-        return gen.getSound(freq, length)
     }
 }
