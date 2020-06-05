@@ -51,7 +51,7 @@ class DigitalSoundGenerator(
         .build()
 
     /**
-     *
+     * 音の波形データの作成
      * @param frequency 鳴らしたい音の周波数
      * @param soundLength 音の長さ
      * @return 音声データ
@@ -63,7 +63,27 @@ class DigitalSoundGenerator(
             var wave = i / (this.sampleRate / frequency) * (Math.PI * 2)
             wave = sin(wave)
             buffer[i] =
-                (if (wave > 0.0) java.lang.Byte.MAX_VALUE else java.lang.Byte.MIN_VALUE).toByte()
+                (if ((i % wave) < wave / 2) java.lang.Byte.MAX_VALUE else java.lang.Byte.MIN_VALUE).toByte()
+        }
+
+        return buffer
+    }
+
+    /**
+     * 合成波形データの作成
+     * @param byte バイト
+     * @param frequency 重ねたい音の周波数
+     * @param soundLength 音の長さ
+     * @return 音声データ
+     */
+    fun getMixSound(byte: Byte, frequency: Double, soundLength: Double): ByteArray {
+        // byteバッファを作成
+        val buffer = ByteArray(ceil(bufferSize * soundLength).toInt())
+        for (i in buffer.indices) {
+            var wave = i / (this.sampleRate / frequency) * (Math.PI * 2)
+            wave = sin(wave)
+            buffer[i] =
+                (if ((i % wave) < wave / 2) java.lang.Byte.MAX_VALUE else java.lang.Byte.MIN_VALUE).toByte()
         }
 
         return buffer

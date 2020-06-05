@@ -46,34 +46,7 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.playButton.setOnClickListener {
-
-            mixSoundList.clear()
-
-            var position = 0
-            do {
-                soundList[position].second.forEach {
-                    if (!it.isSelected) {
-                        it.sound = generateEmptySound(soundGenerator!!, HALF_NOTE)
-                    } else {
-                        it.sound = scaleList[position].sound
-                    }
-                }
-
-                if (position == 0) {
-                    mixSoundList.addAll(soundList[0].second)
-                } else {
-                    mixSoundList.forEach {
-                        for (n in it.sound.indices)
-                            it.sound[n] =
-                                (it.sound[n] + scaleList[position].sound[n]).toByte()
-                    }
-                }
-
-                position++
-            } while (position < 6)
-
             isPlay = true
-
             val th = Thread(this@CreateMusicalScoreFragment)
             th.start()
         }
@@ -82,6 +55,7 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
         audioTrack = soundGenerator!!.audioTrack
         setupRecyclerView()
         setupScaleList()
+        createDummyEmptyList()
     }
 
     override fun onDestroy() {
@@ -267,6 +241,16 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
                     soundList[scalePosition].second[it].isSelected =
                         !soundList[scalePosition].second[it].isSelected
 
+                    soundList[scalePosition].second.forEach { soundDto ->
+                        if (!soundDto.isSelected) {
+                            soundDto.sound = generateEmptySound(soundGenerator!!, HALF_NOTE)
+                        } else {
+                            soundDto.sound = scaleList[position].sound
+                        }
+                    }
+
+                    DigitalSoundGenerator.getMixSound
+
                     if (soundList[scalePosition].second[it].isSelected) {
                         val th = Thread(this@CreateMusicalScoreFragment)
                         th.start()
@@ -282,6 +266,8 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
 
     /**
      * 音階ごとのリスト生成 (20個ずつ)
+     *
+     * @param scale 音階
      */
     private fun createDummyList(scale: Double): List<SoundDto> {
 
@@ -302,5 +288,24 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
         soundList.add(Pair(first = scaleCount, second = items))
         scaleCount++
         return items
+    }
+
+    /**
+     * 休符リスト生成 (20個)
+     */
+    private fun createDummyEmptyList() {
+
+        val items = arrayListOf<SoundDto>()
+
+        for (count in 0..19) {
+            items.add(
+                SoundDto(
+                    generateEmptySound(soundGenerator!!, HALF_NOTE),
+                    HALF_NOTE
+                )
+            )
+        }
+
+        mixSoundList.addAll(items)
     }
 }
