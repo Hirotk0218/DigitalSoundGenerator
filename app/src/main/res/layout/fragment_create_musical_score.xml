@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDeepDark">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_play"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/scale_b"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/scale_b"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
+        <TextView
+            android:id="@+id/scale_c"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/scale_c"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scale_b" />
+
+        <TextView
+            android:id="@+id/scale_d"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/scale_d"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scale_c" />
+
+        <TextView
+            android:id="@+id/scale_e"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/scale_e"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scale_d" />
+
+        <TextView
+            android:id="@+id/scale_f"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/scale_f"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scale_e" />
+
+        <TextView
+            android:id="@+id/scale_g"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/scale_g"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scale_f" />
+
+        <TextView
+            android:id="@+id/scale_a"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/scale_a"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/leftGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scale_g" />
+
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="@+id/scale_b">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleBList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:overScrollMode="never" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleCList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleBList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleDList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleCList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleEList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleDList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleFList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleEList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleGList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleFList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scaleAList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/scaleGList"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never" />
+
+            </RelativeLayout>
+
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+
+    <!--
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleBList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:overScrollMode="never"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/item_scale" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleCList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/scaleBList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleDList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/scaleCList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleEList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleDList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleFList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleEList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleGList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleFList" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/scaleAList"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/scaleGList" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+    -->
