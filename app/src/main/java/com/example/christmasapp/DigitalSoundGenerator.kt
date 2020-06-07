@@ -9,8 +9,8 @@ import kotlin.math.sin
 /**
  * ドレミファソラシドの音階を作成する
  *
- * @param sampleRate
- * @param bufferSize
+ * @param sampleRate サンプルレート
+ * @param bufferSize バッファサイズ
  */
 class DigitalSoundGenerator(
     private val sampleRate: Int,
@@ -63,7 +63,7 @@ class DigitalSoundGenerator(
             var wave = i / (this.sampleRate / frequency) * (Math.PI * 2)
             wave = sin(wave)
             buffer[i] =
-                (if ((i % wave) < wave / 2) java.lang.Byte.MAX_VALUE else java.lang.Byte.MIN_VALUE).toByte()
+                (if (wave > 0.0) java.lang.Byte.MAX_VALUE else java.lang.Byte.MIN_VALUE).toByte()
         }
 
         return buffer
@@ -71,19 +71,58 @@ class DigitalSoundGenerator(
 
     /**
      * 合成波形データの作成
-     * @param byte バイト
-     * @param frequency 重ねたい音の周波数
-     * @param soundLength 音の長さ
+     * @param soundList 譜面データ
+     * @param position 選択されている段落
      * @return 音声データ
      */
-    fun getMixSound(byte: Byte, frequency: Double, soundLength: Double): ByteArray {
+    fun getMixSound(
+        soundList: ArrayList<Pair<Int, ArrayList<SoundDto>>>,
+        position: Int
+    ): ByteArray {
         // byteバッファを作成
-        val buffer = ByteArray(ceil(bufferSize * soundLength).toInt())
+        val buffer = ByteArray(ceil(bufferSize * 0.5).toInt())
+        var waveC = 0.0
+        var waveD = 0.0
+        var waveE = 0.0
+        var waveF = 0.0
+        var waveG = 0.0
+        var waveA = 0.0
+        var waveB = 0.0
+
         for (i in buffer.indices) {
-            var wave = i / (this.sampleRate / frequency) * (Math.PI * 2)
-            wave = sin(wave)
+            if (soundList[0].second[position].isSelected) {
+                waveC = i / (this.sampleRate / FREQ_C) * (Math.PI * 2)
+                waveC = sin(waveC)
+            }
+            if (soundList[1].second[position].isSelected) {
+                waveD = i / (this.sampleRate / FREQ_D) * (Math.PI * 2)
+                waveD = sin(waveD)
+            }
+            if (soundList[2].second[position].isSelected) {
+                waveE = i / (this.sampleRate / FREQ_E) * (Math.PI * 2)
+                waveE = sin(waveE)
+            }
+            if (soundList[3].second[position].isSelected) {
+                waveF = i / (this.sampleRate / FREQ_F) * (Math.PI * 2)
+                waveF = sin(waveF)
+            }
+            if (soundList[4].second[position].isSelected) {
+                waveG = i / (this.sampleRate / FREQ_G) * (Math.PI * 2)
+                waveG = sin(waveG)
+            }
+            if (soundList[5].second[position].isSelected) {
+                waveA = i / (this.sampleRate / FREQ_A) * (Math.PI * 2)
+                waveA = sin(waveA)
+            }
+            if (soundList[6].second[position].isSelected) {
+                waveB = i / (this.sampleRate / FREQ_B) * (Math.PI * 2)
+                waveB = sin(waveB)
+            }
+
+            val mixWave = waveA + waveB + waveC + waveD + waveE + waveF + waveG
+
             buffer[i] =
-                (if ((i % wave) < wave / 2) java.lang.Byte.MAX_VALUE else java.lang.Byte.MIN_VALUE).toByte()
+                (if (mixWave > 0.0) buffer[i] + java.lang.Byte.MAX_VALUE else buffer[i] - java.lang.Byte.MIN_VALUE).toByte()
         }
 
         return buffer
@@ -91,7 +130,7 @@ class DigitalSoundGenerator(
 
     /**
      * いわゆる休符
-     * @param soundLength
+     * @param soundLength 音の長さ
      * @return 無音データ
      */
     fun getEmptySound(soundLength: Double): ByteArray {

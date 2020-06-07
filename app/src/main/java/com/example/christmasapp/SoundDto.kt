@@ -2,7 +2,7 @@ package com.example.christmasapp
 
 /**
  * 引数付きコンストラクタ
- * @param sound 音の情報？
+ * @param sound 音の情報
  * @param length 音の長さ
  * @param isSelected 音が選択されているか
  */

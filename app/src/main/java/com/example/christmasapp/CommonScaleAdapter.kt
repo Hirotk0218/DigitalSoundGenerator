@@ -3,17 +3,25 @@ package com.example.christmasapp
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.christmasapp.databinding.ItemScaleBinding
 
 /**
  * 共用Adapter
- *
- * @param dataList 音データ
  */
-class CommonScaleAdapter(
-    private val dataList: List<SoundDto>
-) : RecyclerView.Adapter<CommonScaleAdapter.ViewHolder>() {
+class CommonScaleAdapter : ListAdapter<SoundDto, CommonScaleAdapter.ViewHolder>(ITEM_COMPARATOR) {
+
+    companion object {
+        private val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<SoundDto>() {
+            override fun areItemsTheSame(oldItem: SoundDto, newItem: SoundDto): Boolean =
+                oldItem.sound.contentEquals(newItem.sound)
+
+            override fun areContentsTheSame(oldItem: SoundDto, newItem: SoundDto): Boolean =
+                oldItem == newItem
+        }
+    }
 
     // region MARK: -public field
     var onItemClick: (position: Int) -> Unit = {}
@@ -26,10 +34,8 @@ class CommonScaleAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = dataList.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = dataList[position]
+        val data = getItem(position)
 
         val binding = holder.binding
         binding.itemView.setOnClickListener {
