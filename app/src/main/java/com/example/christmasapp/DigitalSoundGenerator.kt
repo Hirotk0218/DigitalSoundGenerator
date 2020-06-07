@@ -19,18 +19,33 @@ class DigitalSoundGenerator(
 
     companion object {
         // とりあえず１オクターブ分の音階を確保（半音階含む）
-        const val FREQ_C = 261.625565
-        const val FREQ_Cs = 277.182630
-        const val FREQ_D = 293.664767
-        const val FREQ_Ds = 311.126983
-        const val FREQ_E = 329.627556
-        const val FREQ_F = 349.228231
-        const val FREQ_Fs = 369.994227
-        const val FREQ_G = 391.994535
-        const val FREQ_Gs = 415.304697
-        const val FREQ_A = 440.0
-        const val FREQ_As = 466.163761
-        const val FREQ_B = 493.883301
+        const val FREQ_C = 130.8127827
+        const val FREQ_Df = 138.5913155
+        const val FREQ_D = 146.832384
+        const val FREQ_Ef = 155.563492
+        const val FREQ_E = 164.813778
+        const val FREQ_F = 174.614116
+        const val FREQ_Gf = 184.997211
+        const val FREQ_G = 195.997718
+        const val FREQ_Af = 207.652349
+        const val FREQ_A = 220.0
+        const val FREQ_Hf = 233.081881
+        const val FREQ_H = 246.941651
+
+        const val OCT_FREQ_C = 261.625565
+        const val OCT_FREQ_Df = 277.182630
+        const val OCT_FREQ_D = 293.664767
+        const val OCT_FREQ_Ef = 311.126983
+        const val OCT_FREQ_E = 329.627556
+        const val OCT_FREQ_F = 349.228231
+        const val OCT_FREQ_Gf = 369.994227
+        const val OCT_FREQ_G = 391.994535
+        const val OCT_FREQ_Af = 415.304697
+        const val OCT_FREQ_A = 440.0
+        const val OCT_FREQ_Hf = 466.163761
+        const val OCT_FREQ_H = 493.883301
+
+        const val SEC_OCT_FREQ_C = 523.251131
     }
 
     var audioTrack = AudioTrack.Builder()
@@ -82,12 +97,32 @@ class DigitalSoundGenerator(
         // byteバッファを作成
         val buffer = ByteArray(ceil(bufferSize * 0.5).toInt())
         var waveC = 0.0
+        var waveDf = 0.0
         var waveD = 0.0
+        var waveEf = 0.0
         var waveE = 0.0
         var waveF = 0.0
+        var waveGf = 0.0
         var waveG = 0.0
+        var waveAf = 0.0
         var waveA = 0.0
-        var waveB = 0.0
+        var waveHf = 0.0
+        var waveH = 0.0
+
+        var octWaveC = 0.0
+        var octWaveDf = 0.0
+        var octWaveD = 0.0
+        var octWaveEf = 0.0
+        var octWaveE = 0.0
+        var octWaveF = 0.0
+        var octWaveGf = 0.0
+        var octWaveG = 0.0
+        var octWaveAf = 0.0
+        var octWaveA = 0.0
+        var octWaveHf = 0.0
+        var octWaveH = 0.0
+
+        var secOctWaveC = 0.0
 
         for (i in buffer.indices) {
             if (soundList[0].second[position].isSelected) {
@@ -95,31 +130,107 @@ class DigitalSoundGenerator(
                 waveC = sin(waveC)
             }
             if (soundList[1].second[position].isSelected) {
+                waveDf = i / (this.sampleRate / FREQ_Df) * (Math.PI * 2)
+                waveDf = sin(waveDf)
+            }
+            if (soundList[2].second[position].isSelected) {
                 waveD = i / (this.sampleRate / FREQ_D) * (Math.PI * 2)
                 waveD = sin(waveD)
             }
-            if (soundList[2].second[position].isSelected) {
+            if (soundList[3].second[position].isSelected) {
+                waveEf = i / (this.sampleRate / FREQ_Ef) * (Math.PI * 2)
+                waveEf = sin(waveEf)
+            }
+            if (soundList[4].second[position].isSelected) {
                 waveE = i / (this.sampleRate / FREQ_E) * (Math.PI * 2)
                 waveE = sin(waveE)
             }
-            if (soundList[3].second[position].isSelected) {
+            if (soundList[5].second[position].isSelected) {
                 waveF = i / (this.sampleRate / FREQ_F) * (Math.PI * 2)
                 waveF = sin(waveF)
             }
-            if (soundList[4].second[position].isSelected) {
+            if (soundList[6].second[position].isSelected) {
+                waveGf = i / (this.sampleRate / FREQ_Gf) * (Math.PI * 2)
+                waveGf = sin(waveGf)
+            }
+            if (soundList[7].second[position].isSelected) {
                 waveG = i / (this.sampleRate / FREQ_G) * (Math.PI * 2)
                 waveG = sin(waveG)
             }
-            if (soundList[5].second[position].isSelected) {
+            if (soundList[8].second[position].isSelected) {
+                waveAf = i / (this.sampleRate / FREQ_Af) * (Math.PI * 2)
+                waveAf = sin(waveAf)
+            }
+            if (soundList[9].second[position].isSelected) {
                 waveA = i / (this.sampleRate / FREQ_A) * (Math.PI * 2)
                 waveA = sin(waveA)
             }
-            if (soundList[6].second[position].isSelected) {
-                waveB = i / (this.sampleRate / FREQ_B) * (Math.PI * 2)
-                waveB = sin(waveB)
+            if (soundList[10].second[position].isSelected) {
+                waveHf = i / (this.sampleRate / FREQ_Hf) * (Math.PI * 2)
+                waveHf = sin(waveHf)
+            }
+            if (soundList[11].second[position].isSelected) {
+                waveH = i / (this.sampleRate / FREQ_H) * (Math.PI * 2)
+                waveH = sin(waveH)
             }
 
-            val mixWave = waveA + waveB + waveC + waveD + waveE + waveF + waveG
+            if (soundList[12].second[position].isSelected) {
+                octWaveC = i / (this.sampleRate / OCT_FREQ_C) * (Math.PI * 2)
+                octWaveC = sin(octWaveC)
+            }
+            if (soundList[13].second[position].isSelected) {
+                octWaveDf = i / (this.sampleRate / OCT_FREQ_Df) * (Math.PI * 2)
+                octWaveDf = sin(octWaveDf)
+            }
+            if (soundList[14].second[position].isSelected) {
+                octWaveD = i / (this.sampleRate / OCT_FREQ_D) * (Math.PI * 2)
+                octWaveD = sin(octWaveD)
+            }
+            if (soundList[15].second[position].isSelected) {
+                octWaveEf = i / (this.sampleRate / OCT_FREQ_Ef) * (Math.PI * 2)
+                octWaveEf = sin(octWaveEf)
+            }
+            if (soundList[16].second[position].isSelected) {
+                octWaveE = i / (this.sampleRate / OCT_FREQ_E) * (Math.PI * 2)
+                octWaveE = sin(octWaveE)
+            }
+            if (soundList[17].second[position].isSelected) {
+                octWaveF = i / (this.sampleRate / OCT_FREQ_F) * (Math.PI * 2)
+                octWaveF = sin(octWaveF)
+            }
+            if (soundList[18].second[position].isSelected) {
+                octWaveGf = i / (this.sampleRate / OCT_FREQ_Gf) * (Math.PI * 2)
+                octWaveGf = sin(octWaveGf)
+            }
+            if (soundList[19].second[position].isSelected) {
+                octWaveG = i / (this.sampleRate / OCT_FREQ_G) * (Math.PI * 2)
+                octWaveG = sin(octWaveG)
+            }
+            if (soundList[20].second[position].isSelected) {
+                octWaveAf = i / (this.sampleRate / OCT_FREQ_Af) * (Math.PI * 2)
+                octWaveAf = sin(octWaveAf)
+            }
+            if (soundList[21].second[position].isSelected) {
+                octWaveA = i / (this.sampleRate / OCT_FREQ_A) * (Math.PI * 2)
+                octWaveA = sin(octWaveA)
+            }
+            if (soundList[22].second[position].isSelected) {
+                octWaveHf = i / (this.sampleRate / OCT_FREQ_Hf) * (Math.PI * 2)
+                octWaveHf = sin(octWaveHf)
+            }
+            if (soundList[23].second[position].isSelected) {
+                octWaveH = i / (this.sampleRate / OCT_FREQ_H) * (Math.PI * 2)
+                octWaveH = sin(octWaveH)
+            }
+
+            if (soundList[24].second[position].isSelected) {
+                secOctWaveC = i / (this.sampleRate / SEC_OCT_FREQ_C) * (Math.PI * 2)
+                secOctWaveC = sin(secOctWaveC)
+            }
+
+            val mixWave =
+                waveC + waveDf + waveD + waveEf + waveE + waveF + waveGf + waveG + waveAf + waveA + waveHf + waveH +
+                        octWaveC + octWaveDf + octWaveD + octWaveEf + octWaveE + octWaveF + octWaveGf + octWaveG + octWaveAf + octWaveA + octWaveHf + octWaveH + secOctWaveC
 
             buffer[i] =
                 (if (mixWave > 0.0) buffer[i] + java.lang.Byte.MAX_VALUE else buffer[i] - java.lang.Byte.MIN_VALUE).toByte()

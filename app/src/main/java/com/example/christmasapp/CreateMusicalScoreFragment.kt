@@ -146,7 +146,21 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
                 SoundDto(
                     generateSound(
                         soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_Df,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
                         DigitalSoundGenerator.FREQ_D,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_Ef,
                         HALF_NOTE
                     ), HALF_NOTE
                 ),
@@ -167,7 +181,21 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
                 SoundDto(
                     generateSound(
                         soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_Gf,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
                         DigitalSoundGenerator.FREQ_G,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_Af,
                         HALF_NOTE
                     ), HALF_NOTE
                 ),
@@ -181,7 +209,105 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
                 SoundDto(
                     generateSound(
                         soundGenerator!!,
-                        DigitalSoundGenerator.FREQ_B,
+                        DigitalSoundGenerator.FREQ_Hf,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.FREQ_H,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_C,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_Df,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_D,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_Ef,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_E,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_F,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_Gf,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_G,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_Af,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_A,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_Hf,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.OCT_FREQ_H,
+                        HALF_NOTE
+                    ), HALF_NOTE
+                ),
+                SoundDto(
+                    generateSound(
+                        soundGenerator!!,
+                        DigitalSoundGenerator.SEC_OCT_FREQ_C,
                         HALF_NOTE
                     ), HALF_NOTE
                 )
@@ -193,43 +319,131 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
      * 各音階ごとのAdapterの設定
      */
     private fun setupRecyclerView() {
-        // ド
-        setupAdapter(
-            recyclerView = binding.scaleBList,
-            position = 0
-        )
-        // レ
+        // C
         setupAdapter(
             recyclerView = binding.scaleCList,
+            position = 0
+        )
+        // Db
+        setupAdapter(
+            recyclerView = binding.scaleDbList,
             position = 1
         )
-        // ミ
+        // D
         setupAdapter(
             recyclerView = binding.scaleDList,
             position = 2
         )
-        // ファ
+        // Eb
         setupAdapter(
-            recyclerView = binding.scaleEList,
+            recyclerView = binding.scaleEbList,
             position = 3
         )
-        // ソ
+        // E
         setupAdapter(
-            recyclerView = binding.scaleFList,
+            recyclerView = binding.scaleEList,
             position = 4
         )
-        // ラ
+        // F
         setupAdapter(
-            recyclerView = binding.scaleGList,
+            recyclerView = binding.scaleFList,
             position = 5
         )
-        // シ
+        // Gb
         setupAdapter(
-            recyclerView = binding.scaleAList,
+            recyclerView = binding.scaleGbList,
             position = 6
         )
-
-
+        // G
+        setupAdapter(
+            recyclerView = binding.scaleGList,
+            position = 7
+        )
+        // Ab
+        setupAdapter(
+            recyclerView = binding.scaleAbList,
+            position = 8
+        )
+        // A
+        setupAdapter(
+            recyclerView = binding.scaleAList,
+            position = 9
+        )
+        // Hb
+        setupAdapter(
+            recyclerView = binding.scaleHbList,
+            position = 10
+        )
+        // H
+        setupAdapter(
+            recyclerView = binding.scaleHList,
+            position = 11
+        )
+        // 1オクターブのC
+        setupAdapter(
+            recyclerView = binding.octScaleCList,
+            position = 12
+        )
+        // 1オクターブのDb
+        setupAdapter(
+            recyclerView = binding.octScaleDbList,
+            position = 13
+        )
+        // 1オクターブのD
+        setupAdapter(
+            recyclerView = binding.octScaleDList,
+            position = 14
+        )
+        // 1オクターブのEb
+        setupAdapter(
+            recyclerView = binding.octScaleEbList,
+            position = 15
+        )
+        // 1オクターブのE
+        setupAdapter(
+            recyclerView = binding.octScaleEList,
+            position = 16
+        )
+        // 1オクターブのF
+        setupAdapter(
+            recyclerView = binding.octScaleFList,
+            position = 17
+        )
+        // 1オクターブのG
+        setupAdapter(
+            recyclerView = binding.octScaleGbList,
+            position = 18
+        )
+        // 1オクターブのG
+        setupAdapter(
+            recyclerView = binding.octScaleGList,
+            position = 19
+        )
+        // 1オクターブのA
+        setupAdapter(
+            recyclerView = binding.octScaleAbList,
+            position = 20
+        )
+        // 1オクターブのA
+        setupAdapter(
+            recyclerView = binding.octScaleAList,
+            position = 21
+        )
+        // 1オクターブのHb
+        setupAdapter(
+            recyclerView = binding.octScaleHbList,
+            position = 22
+        )
+        // 1オクターブのH
+        setupAdapter(
+            recyclerView = binding.octScaleHList,
+            position = 23
+        )
+        // 2オクターブのC
+        setupAdapter(
+            recyclerView = binding.secOctScaleCList,
+            position = 24
+        )
     }
 
     /**
@@ -269,19 +483,19 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
             }
 
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = scaleAdapter
         }
     }
 
     /**
-     * 音階ごとのリスト生成 (20個ずつ)
+     * 音階ごとのリスト生成 (40個ずつ)
      */
     private fun createDummyList(): List<SoundDto> {
 
         val items = arrayListOf<SoundDto>()
 
-        for (count in 0..19) {
+        for (count in 0..39) {
             items.add(
                 SoundDto(
                     generateEmptySound(soundGenerator!!, HALF_NOTE),
@@ -312,23 +526,59 @@ class CreateMusicalScoreFragment : Fragment(), Runnable {
         soundListLiveData.observe(this, Observer {
 
             when (scaleCount) {
-                0 -> (binding.scaleBList.adapter as? CommonScaleAdapter)
+                0 -> (binding.scaleCList.adapter as? CommonScaleAdapter)
                     ?.submitList(it)
-                1 -> (binding.scaleCList.adapter as? CommonScaleAdapter)
+                1 -> (binding.scaleDbList.adapter as? CommonScaleAdapter)
                     ?.submitList(it)
                 2 -> (binding.scaleDList.adapter as? CommonScaleAdapter)
                     ?.submitList(it)
-                3 -> (binding.scaleEList.adapter as? CommonScaleAdapter)
+                3 -> (binding.scaleEbList.adapter as? CommonScaleAdapter)
                     ?.submitList(it)
-                4 -> (binding.scaleFList.adapter as? CommonScaleAdapter)
+                4 -> (binding.scaleEList.adapter as? CommonScaleAdapter)
                     ?.submitList(it)
-                5 -> (binding.scaleGList.adapter as? CommonScaleAdapter)
+                5 -> (binding.scaleFList.adapter as? CommonScaleAdapter)
                     ?.submitList(it)
-                6 -> (binding.scaleAList.adapter as? CommonScaleAdapter)
+                6 -> (binding.scaleGbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                7 -> (binding.scaleGList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                8 -> (binding.scaleAbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                9 -> (binding.scaleAList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                10 -> (binding.scaleHbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                11 -> (binding.scaleHList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                12 -> (binding.octScaleCList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                13 -> (binding.octScaleDbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                14 -> (binding.octScaleDList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                15 -> (binding.octScaleEbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                16 -> (binding.octScaleEList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                17 -> (binding.octScaleFList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                18 -> (binding.octScaleGbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                19 -> (binding.octScaleGList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                20 -> (binding.octScaleAbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                21 -> (binding.octScaleAList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                22 -> (binding.octScaleHbList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                23 -> (binding.octScaleHList.adapter as? CommonScaleAdapter)
+                    ?.submitList(it)
+                24 -> (binding.secOctScaleCList.adapter as? CommonScaleAdapter)
                     ?.submitList(it)
             }
 
-            if (scaleCount < 7 && !isClickItem) {
+            if (scaleCount < 25 && !isClickItem) {
                 scaleCount++
                 createDummyList()
             }

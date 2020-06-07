@@ -3,8 +3,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemView"
-        android:layout_width="32dp"
-        android:layout_height="48dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:background="@color/colorPrimaryDark"
         android:layout_margin="2dp" />
 </layout>
